@@ -8,7 +8,7 @@
  *
  * You are encouraged to use STL container types as an underlying storage mechanism for the grid cells.
  *
- * @author YOUR_STUDENT_NUMBER
+ * @author 960444
  * @date March, 2020
  */
 #include "grid.h"
@@ -28,6 +28,9 @@
  *      Grid grid;
  *
  */
+
+ Grid::Grid() : width(0), height(0), total_cells(0), alive_cells(0),
+    dead_cells(0) {};
 
 
 /**
@@ -54,6 +57,9 @@
  *      The edge size to use for the width and height of the grid.
  */
 
+ Grid::Grid(const unsigned int square_size) : width(square_size), height(square_size),
+    total_cells(square_size * square_size), alive_cells(0),
+    dead_cells(square_size * square_size) {};
 
 /**
  * Grid::Grid(width, height)
@@ -66,11 +72,15 @@
  *      Grid grid(16, 9);
  *
  * @param width
- *      The width of the grid.
+ *      The _width of the grid.
  *
  * @param height
- *      The height of the grid.
+ *      The _height of the grid.
  */
+
+ Grid::Grid(const unsigned int _width, const unsigned int _height) : width(_width),
+    height(_height), total_cells(_width * _height), alive_cells(0),
+    dead_cells(_width * _height) {};
 
 
 /**
@@ -96,7 +106,9 @@
  * @return
  *      The width of the grid.
  */
-
+ unsigned int Grid::get_width() const {
+   return width;
+ }
 
 /**
  * Grid::get_height()
@@ -121,6 +133,10 @@
  * @return
  *      The height of the grid.
  */
+
+ unsigned int Grid::get_height() const {
+   return height;
+ }
 
 
 /**
@@ -147,6 +163,9 @@
  *      The number of total cells.
  */
 
+ unsigned int Grid::get_total_cells() const {
+   return total_cells;
+ }
 
 /**
  * Grid::get_alive_cells()
@@ -171,6 +190,10 @@
  * @return
  *      The number of alive cells.
  */
+
+ unsigned int Grid::get_alive_cells() const {
+   return alive_cells;
+ }
 
 
 /**
@@ -197,6 +220,10 @@
  *      The number of dead cells.
  */
 
+ unsigned int Grid::get_dead_cells() const {
+   return dead_cells;
+ }
+
 
 /**
  * Grid::resize(square_size)
@@ -215,6 +242,12 @@
  * @param square_size
  *      The new edge size for both the width and height of the grid.
  */
+
+ void Grid::resize(const unsigned int square_size) {
+   width = square_size;
+   height = square_size;
+   total_cells = square_size * square_size;
+ }
 
 
 /**
@@ -237,6 +270,12 @@
  * @param new_height
  *      The new height for the grid.
  */
+
+ void Grid::resize(const unsigned int new_width, const unsigned int new_height) {
+   width = new_width;
+   height = new_height;
+   total_cells = new_width * new_height;
+ }
 
 
 /**
@@ -518,4 +557,3 @@
  * @return
  *      Returns a reference to the output stream to enable operator chaining.
  */
-
