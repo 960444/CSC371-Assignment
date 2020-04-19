@@ -375,8 +375,7 @@
  */
 
  char Grid::get(unsigned int x, unsigned int y) const {
-   int offset = (int) get_index(x,y);
-   return store_cells[offset];
+   return operator()(x,y);
  }
 
 /**
@@ -407,8 +406,7 @@
  */
 
  void Grid::set(unsigned int x, unsigned int y, char cell_state) {
-   int offset = (int) get_index(x,y);
-   store_cells[offset] = cell_state;
+   operator()(x,y) = cell_state;
  }
 
 
@@ -447,7 +445,10 @@
  * @throws
  *      std::runtime_error or sub-class if x,y is not a valid coordinate within the grid.
  */
-
+ char& Grid::operator()(unsigned int x, unsigned int y) {
+   unsigned int offset = get_index(x,y);
+   return store_cells[offset];
+ }
 
 /**
  * Grid::operator()(x, y)
@@ -479,6 +480,12 @@
  * @throws
  *      std::exception or sub-class if x,y is not a valid coordinate within the grid.
  */
+
+ const char Grid::operator()(unsigned int x, unsigned int y) const {
+   unsigned int offset = get_index(x,y);
+   return store_cells[offset];
+ }
+
 
 
 /**

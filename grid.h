@@ -64,5 +64,7 @@ class Grid {
     friend std::ostream& operator<<(std::ostream& os, const Grid &grid);
     char get(unsigned int x, unsigned int y) const;
     void set(unsigned int x, unsigned int y, char cell_state);
+    char& operator()(unsigned int x, unsigned int y);
+    const char operator()(unsigned int x, unsigned int y) const;
 
 };
