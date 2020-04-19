@@ -18,7 +18,7 @@
  *          - Moving off the left edge you appear on the right edge and vice versa.
  *          - Moving off the top edge you appear on the bottom edge and vice versa.
  *
- * @author YOUR_STUDENT_NUMBER
+ * @author 960444
  * @date March, 2020
  */
 #include "world.h"
@@ -291,6 +291,10 @@
  *      A reference to the current state.
  */
 
+  const Grid World::get_state() const {
+    return current_state;
+  }
+
 
 /**
  * World::resize(square_size)
@@ -311,6 +315,7 @@
  * @param square_size
  *      The new edge size for both the width and height of the grid.
  */
+
 
 
 /**
@@ -335,6 +340,10 @@
  * @param new_height
  *      The new height for the grid.
  */
+
+ void World::resize(unsigned int width, unsigned int height) {
+   current_state.resize(width,height);
+ }
 
 
 /**
