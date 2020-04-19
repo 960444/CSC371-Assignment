@@ -16,7 +16,8 @@
 // Include the minimal number of headers needed to support your implementation.
 // #include ...
 #include <vector>
-
+#include <iostream>
+#include <ostream>
 
 /**
  * Grid::Grid()
@@ -687,3 +688,32 @@
  * @return
  *      Returns a reference to the output stream to enable operator chaining.
  */
+
+ std::ostream& operator<<(std::ostream& os, const Grid &grid) {
+   unsigned int w = grid.get_width();
+   unsigned int h = grid.get_height();
+   std::string border = "+";
+   for(unsigned int i = 0; i < w; i++) {
+     border += "-";
+   }
+   border += "+\n";
+   std::string display_grid = "";
+   for(unsigned int j = 0; j < h; j++) {
+     for(unsigned int k = 0; k <= (w + 1); k++) {
+       if(k == 0) {
+         display_grid += "|";
+       } else if (k == (w+1)) {
+         display_grid += "|\n";
+       } else {
+         char cell = grid.get((k-1),j);
+         /*
+         unsigned int offset = (k - 1) +  (j * w);
+         char cell = store_cells[offset];
+         */
+         display_grid += cell;
+       }
+     }
+   }
+   os << border << display_grid << border;
+   return os;
+ }

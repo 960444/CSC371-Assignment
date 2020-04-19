@@ -13,6 +13,8 @@
 // Add the minimal number of includes you need in order to declare the class.
 // #include ...
 #include <vector>
+#include <iostream>
+#include <ostream>
 
 
 /**
@@ -37,9 +39,6 @@ class Grid {
     unsigned int total_cells;
     unsigned int get_index(unsigned int x, unsigned int y) const;
 
-
-
-
   public:
     //construction & destruction
     Grid();
@@ -62,6 +61,7 @@ class Grid {
     Grid crop(unsigned int x0, unsigned int y0, unsigned int x1, unsigned int y1) const;
     void merge(Grid other, unsigned int x0, unsigned int y0, bool alive_only = false);
     Grid rotate(int rotation) const;
+    friend std::ostream& operator<<(std::ostream& os, const Grid &grid);
     char get(unsigned int x, unsigned int y) const;
     void set(unsigned int x, unsigned int y, char cell_state);
 
