@@ -521,6 +521,7 @@
    unsigned int new_height = y1 - y0;
    Grid updated_grid(new_width,new_height);
 
+   //assign cells to the new grid
    for(unsigned int i = y0; i < y1; i++) {
      for(unsigned int j = x0; j < x1; j++) {
        if((i <= y1 && i >= y0) && (j <= x1 && j >= x0)) {
