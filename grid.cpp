@@ -17,6 +17,7 @@
 // #include ...
 #include <vector>
 
+
 /**
  * Grid::Grid()
  *
@@ -514,7 +515,22 @@
  *      or if the crop window has a negative size.
  */
 
+ Grid Grid::crop(unsigned int x0, unsigned int y0, unsigned int x1, unsigned int y1) const {
+   //create the new grid
+   unsigned int new_width = x1 - x0;
+   unsigned int new_height = y1 - y0;
+   Grid updated_grid(new_width,new_height);
 
+   for(unsigned int i = y0; i < y1; i++) {
+     for(unsigned int j = x0; j < x1; j++) {
+       if((i <= y1 && i >= y0) && (j <= x1 && j >= x0)) {
+         unsigned int offset = (j - x0) +  ((i - y0) * new_width);
+         updated_grid.store_cells[offset] = store_cells[get_index(j,i)];
+       }
+     }
+   }
+   return updated_grid;
+ }
 
 
 
@@ -556,6 +572,8 @@
  * @throws
  *      std::exception or sub-class if the other grid being placed does not fit within the bounds of the current grid.
  */
+
+
 
 
 /**
