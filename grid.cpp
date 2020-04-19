@@ -574,7 +574,24 @@
  *      std::exception or sub-class if the other grid being placed does not fit within the bounds of the current grid.
  */
 
+ void Grid::merge(Grid other, unsigned int x0, unsigned int y0, bool alive_only) {
+     unsigned int other_width = other.get_width();
+     unsigned int other_height = other.get_height();
 
+     for(unsigned int i = x0; i < (x0+other_width); i++) {
+       for(unsigned int j = y0; j < (y0+other_height); j++) {
+         if(alive_only) {
+           char cell = other.get((i-x0),(j-y0));
+           if(cell == Cell::ALIVE) {
+             set(i,j,cell);
+           }
+         } else {
+           char cell = other.get((i-x0),(j-y0));
+           set(i,j,cell);
+         }
+       }
+     }
+   }
 
 
 /**
@@ -599,6 +616,40 @@
  * @return
  *      Returns a copy of the grid that has been rotated.
  */
+
+ Grid Grid::rotate(int rotation) const {
+   int rotate_by = rotation % 4;
+   Grid new_grid(width,height);
+
+   if(rotate_by < 0) {
+     rotate_by = rotate_by + 4;
+   }
+   if(!(rotate_by == 0)) {
+     if(!(rotate_by % 2 == 0)) {
+       new_grid.resize(height,width);
+     } else {
+       new_grid.resize(width,height);
+     }
+     for(unsigned int i = 0; i < get_width(); i++) {
+       for(unsigned int j = 0; j < get_height(); j++) {
+         if(rotate_by == 1) {
+           new_grid.set(new_grid.get_width()-1-j, i, get(i,j));
+         } else if (rotate_by == 2) {
+           new_grid.set(new_grid.get_width()-1-i, new_grid.get_height()-1-j, get(i,j));
+         } else {
+           new_grid.set(j,new_grid.get_height()-1-i, get(i,j));
+         }
+       }
+     }
+   } else {
+     for(unsigned int i = 0; i < get_width(); i++) {
+       for(unsigned int j = 0; j < get_height(); j++) {
+         new_grid.set(i,j,get(i,j));
+       }
+     }
+   }
+   return new_grid;
+ }
 
 
 /**
