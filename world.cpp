@@ -22,6 +22,7 @@
  * @date March, 2020
  */
 #include "world.h"
+#include "grid.h"
 
 // Include the minimal number of headers needed to support your implementation.
 // #include ...
@@ -37,6 +38,11 @@
  *      World world;
  *
  */
+
+ World::World() {
+   current_state = Grid(0);
+   next_state = Grid(0);
+ }
 
 
 /**
@@ -58,7 +64,10 @@
  * @param square_size
  *      The edge size to use for the width and height of the world.
  */
-
+ World::World(unsigned int square_size) {
+   current_state = Grid(square_size);
+   next_state = Grid(square_size);
+ }
 
 /**
  * World::World(width, height)
@@ -75,6 +84,11 @@
  * @param height
  *      The height of the world.
  */
+
+ World::World(unsigned int width, unsigned int height) {
+   current_state = Grid(width, height);
+   next_state = Grid(width, height);
+ }
 
 
 /**
@@ -96,6 +110,11 @@
  * @param initial_state
  *      The state of the constructed world.
  */
+
+ World::World(Grid initial_state) {
+   current_state = initial_state;
+   next_state = initial_state;
+ }
 
 
 /**
@@ -122,6 +141,10 @@
  *      The width of the world.
  */
 
+ unsigned int World::get_width() const {
+   return current_state.get_width();
+ }
+
 
 /**
  * World::get_height()
@@ -146,6 +169,10 @@
  * @return
  *      The height of the world.
  */
+
+ unsigned int World::get_height() const {
+   return current_state.get_height();
+ }
 
 
 /**
@@ -172,6 +199,11 @@
  *      The number of total cells.
  */
 
+ unsigned int World::get_total_cells() const {
+   return current_state.get_total_cells();
+ }
+
+
 
 /**
  * World::get_alive_cells()
@@ -197,6 +229,12 @@
  *      The number of alive cells.
  */
 
+ unsigned int World::get_alive_cells() const {
+   return current_state.get_alive_cells();
+ }
+
+
+
 
 /**
  * World::get_dead_cells()
@@ -221,6 +259,11 @@
  * @return
  *      The number of dead cells.
  */
+
+ unsigned int World::get_dead_cells() const {
+   return current_state.get_dead_cells();
+ }
+
 
 
 /**
