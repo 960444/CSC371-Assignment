@@ -12,6 +12,7 @@
 
 // Add the minimal number of includes you need in order to declare the class.
 // #include ...
+#include <vector>
 
 /**
  * A Cell is a char limited to two named values for Cell::DEAD and Cell::ALIVE.
@@ -33,15 +34,21 @@ class Grid {
     unsigned int width;
     unsigned int height;
     unsigned int total_cells;
-    unsigned int alive_cells;
-    unsigned int dead_cells;
+    unsigned int get_index(unsigned int x, unsigned int y) const;
+
+
+
 
   public:
     //construction & destruction
     Grid();
-    explicit Grid(const unsigned int square_size);
-    Grid(const unsigned int _width, const unsigned int _height);
+    explicit Grid(unsigned int square_size);
+    Grid(unsigned int _width, unsigned int _height);
     //~Grid();
+
+    //grid used to store cells
+    std::vector<char> store_cells;
+
 
     //member functions
     unsigned int get_width() const;
@@ -49,7 +56,11 @@ class Grid {
     unsigned int get_total_cells() const;
     unsigned int get_alive_cells() const;
     unsigned int get_dead_cells() const;
-    void resize(const unsigned int square_size); 
-    void resize(const unsigned int new_width, const unsigned int new_height);
+    void resize(unsigned int square_size);
+    void resize(unsigned int new_width, unsigned int new_height);
+    char get(unsigned int x, unsigned int y) const;
+    void set(unsigned int x, unsigned int y, char cell_state);
+
+
 
 };

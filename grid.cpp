@@ -15,6 +15,7 @@
 
 // Include the minimal number of headers needed to support your implementation.
 // #include ...
+#include <vector>
 
 /**
  * Grid::Grid()
@@ -29,8 +30,7 @@
  *
  */
 
- Grid::Grid() : width(0), height(0), total_cells(0), alive_cells(0),
-    dead_cells(0) {};
+ Grid::Grid() : width(0), height(0), total_cells(0) {};
 
 
 /**
@@ -57,9 +57,12 @@
  *      The edge size to use for the width and height of the grid.
  */
 
- Grid::Grid(const unsigned int square_size) : width(square_size), height(square_size),
-    total_cells(square_size * square_size), alive_cells(0),
-    dead_cells(square_size * square_size) {};
+ Grid::Grid(unsigned int square_size) : width(square_size), height(square_size),
+  total_cells(square_size * square_size) {
+  for(unsigned int i = 0; i < total_cells; i++) {
+    store_cells.push_back(Cell::DEAD);
+  }
+ };
 
 /**
  * Grid::Grid(width, height)
@@ -78,9 +81,12 @@
  *      The _height of the grid.
  */
 
- Grid::Grid(const unsigned int _width, const unsigned int _height) : width(_width),
-    height(_height), total_cells(_width * _height), alive_cells(0),
-    dead_cells(_width * _height) {};
+ Grid::Grid(unsigned int _width, unsigned int _height) : width(_width),
+    height(_height), total_cells(_width * _height){
+      for(unsigned int i = 0; i < total_cells; i++) {
+        store_cells.push_back(Cell::DEAD);
+      }
+    };
 
 
 /**
@@ -192,6 +198,14 @@
  */
 
  unsigned int Grid::get_alive_cells() const {
+   unsigned int alive_cells = 0;
+   for(unsigned int i = 0; i < width; i++) {
+     for(unsigned int j = 0; j < height; j++) {
+       if(get(i,j) == Cell::ALIVE) {
+         alive_cells++;
+       }
+     }
+   }
    return alive_cells;
  }
 
@@ -221,6 +235,14 @@
  */
 
  unsigned int Grid::get_dead_cells() const {
+   unsigned int dead_cells = 0;
+   for(unsigned int i = 0; i < width; i++) {
+     for(unsigned int j = 0; j < height; j++) {
+       if(get(i,j) == Cell::DEAD) {
+         dead_cells++;
+       }
+     }
+   }
    return dead_cells;
  }
 
@@ -243,7 +265,7 @@
  *      The new edge size for both the width and height of the grid.
  */
 
- void Grid::resize(const unsigned int square_size) {
+ void Grid::resize(unsigned int square_size) {
    width = square_size;
    height = square_size;
    total_cells = square_size * square_size;
@@ -270,12 +292,34 @@
  * @param new_height
  *      The new height for the grid.
  */
+/*
 
- void Grid::resize(const unsigned int new_width, const unsigned int new_height) {
-   width = new_width;
-   height = new_height;
-   total_cells = new_width * new_height;
- }
+  */
+
+  void Grid::resize(unsigned int new_width, unsigned int new_height) {
+    Grid n(new_width,new_height);
+
+    for(unsigned int i = 0; i < height; i++) {
+      for(unsigned int j = 0; j < width; j++) {
+        if(i < new_height && j < new_width) {
+          char c = store_cells[get_index(j,i)];
+          n.set(j,i,c);
+        }
+      }
+    }
+
+    width = new_width;
+    height = new_height;
+    total_cells = new_width * new_height;
+
+    store_cells.clear();
+    for(unsigned int k = 0; k < total_cells; k++) {
+      char cell = n.store_cells[k];
+      store_cells.push_back(cell);
+    }
+   }
+
+
 
 
 /**
@@ -295,6 +339,9 @@
  *      The 1d offset from the start of the data array where the desired cell is located.
  */
 
+ unsigned int Grid::get_index(unsigned int x, unsigned int y) const {
+   return x + (y * width);
+ }
 
 /**
  * Grid::get(x, y)
@@ -325,6 +372,10 @@
  *      std::exception or sub-class if x,y is not a valid coordinate within the grid.
  */
 
+ char Grid::get(unsigned int x, unsigned int y) const {
+   int offset = (int) get_index(x,y);
+   return store_cells[offset];
+ }
 
 /**
  * Grid::set(x, y, value)
@@ -352,6 +403,11 @@
  * @throws
  *      std::exception or sub-class if x,y is not a valid coordinate within the grid.
  */
+
+ void Grid::set(unsigned int x, unsigned int y, char cell_state) {
+   int offset = (int) get_index(x,y);
+   store_cells[offset] = cell_state;
+ }
 
 
 /**
@@ -457,6 +513,10 @@
  *      std::exception or sub-class if x0,y0 or x1,y1 are not valid coordinates within the grid
  *      or if the crop window has a negative size.
  */
+
+
+
+
 
 
 /**
