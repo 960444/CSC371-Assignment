@@ -15,6 +15,7 @@
 #include <vector>
 
 
+
 /**
  * A Cell is a char limited to two named values for Cell::DEAD and Cell::ALIVE.
  */
@@ -60,9 +61,8 @@ class Grid {
     void resize(unsigned int square_size);
     void resize(unsigned int new_width, unsigned int new_height);
     Grid crop(unsigned int x0, unsigned int y0, unsigned int x1, unsigned int y1) const;
+    void merge(Grid other, unsigned int x0, unsigned int y0, bool alive_only = false);
     char get(unsigned int x, unsigned int y) const;
     void set(unsigned int x, unsigned int y, char cell_state);
-
-
 
 };

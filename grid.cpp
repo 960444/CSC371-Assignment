@@ -18,6 +18,7 @@
 #include <vector>
 
 
+
 /**
  * Grid::Grid()
  *
@@ -573,6 +574,24 @@
  *      std::exception or sub-class if the other grid being placed does not fit within the bounds of the current grid.
  */
 
+ void Grid::merge(Grid other, unsigned int x0, unsigned int y0, bool alive_only) {
+    unsigned int other_width = other.get_width();
+    unsigned int other_height = other.get_height();
+
+    for(unsigned int i = x0; i < (x0+other_width); i++) {
+      for(unsigned int j = y0; j < (y0+other_height); j++) {
+        if(alive_only) {
+          char cell = other.get((i-x0),(j-y0));
+          if(cell == Cell::ALIVE) {
+            set(i,j,cell);
+          }
+        } else {
+          char cell = other.get((i-x0),(j-y0));
+          set(i,j,cell);
+        }
+      }
+    }
+  }
 
 
 
@@ -598,6 +617,8 @@
  * @return
  *      Returns a copy of the grid that has been rotated.
  */
+
+
 
 
 /**
